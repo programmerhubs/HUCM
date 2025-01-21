@@ -1,5 +1,9 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using HUCM_App.DbContextfile;
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(u=>u.UseNpgsql(builder.Configuration.GetConnectionString("testdb")));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

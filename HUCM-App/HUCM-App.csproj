@@ -7,4 +7,13 @@
     <RootNamespace>HUCM_App</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="DbContextfile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DbContextfile\" />
+  </ItemGroup>
 </Project>
