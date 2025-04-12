@@ -1,0 +1,106 @@
+﻿<!-- Add Department Button -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+    <i class="fas fa-plus"></i> Add Department
+</button>
+
+<table id="departmentTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Department Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <td>@department.DeptId</td>
+                <td>@department.DepartmentName</td>
+                <td>
+                    <!-- Edit Department Button -->
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"
+                            data-id="@department.DeptId" data-name="@department.DepartmentName">
+                        <i class="fas fa-edit"></i> 
+                    </button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" 
+                            data-id="@department.DeptId" data-name="@department.DepartmentName">
+                        <i class="fas fa-trash"></i> 
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Add Department Modal -->
+<div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDepartmentModalLabel">
+                    <i class="fas fa-plus-circle"></i> Add New Department
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddDepartment", "Department", FormMethod.Post, new { @id = "addDepartmentForm" }))
+                {
+                    <div class="mb-3">
+                        <label for="DepartmentName" class="form-label">Department Name</label>
+                        <input type="text" class="form-control" name="DepartmentName" id="DepartmentName" required />
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Department Modal -->
+<div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentModalLabel">
+                    <i class="fas fa-edit"></i> Edit Department
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditDepartment", "Department", FormMethod.Post, new { @id = "editDepartmentForm" }))
+                {
+                    <input type="hidden" name="DeptId" id="editDeptId" />
+                    <div class="mb-3">
+                        <label for="DepartmentName" class="form-label">Department Name</label>
+                        <input type="text" class="form-control" name="DepartmentName" id="editDepartmentName" required />
+                    </div>
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-check"></i> Update
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Handling Modal Data -->
+<script>$(document).ready(function () {
+        // Initialize DataTable
+        $('#departmentTable').DataTable();
+
+        // Handle Edit Modal Population
+        $('#editDepartmentModal').on('show.bs.modal', function (e) {
+            var button = $(e.relatedTarget);
+            var deptId = button.data('id');
+            var deptName = button.data('name');
+
+            // Populate modal fields
+            $('#editDeptId').val(deptId);
+            $('#editDepartmentName').val(deptName);
+            console.log("Dept ID: " + deptId + ", Dept Name: " + deptName);
+        });
+    });</script>
+    

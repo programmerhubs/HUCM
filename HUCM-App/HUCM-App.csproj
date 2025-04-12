@@ -9,11 +9,34 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0" />
+    <PackageReference Include="Font" Version="0.3.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
+    <PackageReference Include="jquery.datatables" Version="1.10.15" />
+    <PackageReference Include="jQuery" Version="3.7.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.18" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="DbContextfile\" />
+    <None Remove="Services\" />
+    <None Remove="GenricRepostiory\" />
+    <None Remove="Repositry\" />
+    <None Remove="Views\Department\" />
+    <None Remove="Views\Designation\" />
+    <None Remove="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DbContextfile\" />
+    <Folder Include="Services\" />
+    <Folder Include="GenricRepostiory\" />
+    <Folder Include="Repositry\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\Department\" />
+    <Folder Include="Views\Designation\" />
+    <Folder Include="Views\Employee\" />
+    
   </ItemGroup>
 </Project>

@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HUCM_App.Models
 {
-	public class User:BaseEntity
-	{
-		[Key]
+    public class Skill : BaseEntity
+    {
+        [Key]
         [DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
-		public string UserName { get; set; } = string.Empty;
-	}
+        public int SkillId { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+    }
+
 }
+

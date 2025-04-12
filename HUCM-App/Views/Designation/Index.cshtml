@@ -1,0 +1,59 @@
+﻿<h2>Designation Manager</h2>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
+    <i class="fas fa-plus"></i> Add Designation
+</button>
+<table id="departmentTable" class="datatable table table-striped table-hover table-bordered">
+    <thead class="table-primary">
+        <tr>
+            <th>Department Id</th>
+            <th>Name</th>
+            <th><i class="fas fa-control"></i>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RoleId</td>
+                <td>@item.RoleName</td>
+                <td>
+                    <!-- Edit Department Button -->
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editDepartmentModal"
+                            data-id="@item.RoleId" data-name="@item.RoleId">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger" data-bs-toggle="modal"
+                            data-id="@item.RoleId" data-name="@item.RoleName">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Add Designation Modal -->
+<div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addDepartmentModalLabel">
+                    <i class="fas fa-plus-circle"></i> Add New Designation
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddNew", "Designation", FormMethod.Post, new { @id = "addDepartmentForm" }))
+                {
+                    <div class="mb-3">
+                        <label for="DepartmentName" class="form-label">Designation</label>
+                        <input type="text" class="form-control" name="name" id="name" required />
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
