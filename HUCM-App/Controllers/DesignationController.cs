@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using HUCM_App.Models;
 using HUCM_App.Repositry;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace HUCM_App.Controllers
 {
     public class DesignationController : Controller
@@ -17,12 +14,11 @@ namespace HUCM_App.Controllers
         {
             roleRepositry = role;
         }
-        // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
             ViewData["Title"] = "Designation Manager";
 
-            var result =await roleRepositry.GetRoleAsync();
+            var result = await roleRepositry.GetRoleAsync();
             return View(result);
         }
         [HttpPost]
@@ -30,11 +26,29 @@ namespace HUCM_App.Controllers
         {
             EmpRole role = new EmpRole()
             {
-                RoleName = name
+                RoleName = name,
+                IsActive=true
             };
             int msg = await roleRepositry.AddRoleAsync(role);
-           return RedirectToAction("Index");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int roleid, string name)
+        {
+            EmpRole role = new EmpRole()
+            {
+                RoleName = name
+            };
+          int msg=await  roleRepositry.UpdateRoleAsync(role, roleid);
+            return RedirectToAction("Index");
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int RoleId)
+        {
+            int msg = await roleRepositry.DeleteRoleAsync(RoleId);
+            return RedirectToAction("Index");
         }
     }
 }
-

@@ -16,12 +16,15 @@ namespace HUCM_App.Services
 
         public async  Task<int> AddDepartmentAsync(Department department)
         {
+            
             int retval = 0;
             try
             {
                 var IsExist = _db.Departmentstbl.Any(x => x.DepartmentName == department.DepartmentName && x.IsActive == true);
                 if(!IsExist)
                 {
+                    department.IsActive = true;
+                    department.CreatedDate = DateTime.Now.ToString();
                    await _db.Departmentstbl.AddAsync(department);
                    await  _db.SaveChangesAsync();
                     retval = 1;
@@ -66,7 +69,7 @@ namespace HUCM_App.Services
         {
             try
             {
-                return await _db.Departmentstbl.ToListAsync();
+                return await _db.Departmentstbl.Where(x=>x.IsActive==true).OrderBy(x=>x.CreatedDate).ToListAsync();
             }
             catch (Exception ex)
             {

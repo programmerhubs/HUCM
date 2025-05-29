@@ -17,15 +17,13 @@ namespace HUCM_App.Controllers
         private readonly IDepartmentRepositry _repo;
         public DepartmentController(IDepartmentRepositry departmentRepositry)
         {
-            
-
             this._repo = departmentRepositry;
         }
-        // GET: /<controller>/
         public async  Task<IActionResult> Index()
         {
             ViewData["Title"] = "Department Manager";
             var result=await  _repo.GetDepartmentAsync();
+            messageset();
             return View(result);
         }
         [HttpPost]
@@ -37,20 +35,40 @@ namespace HUCM_App.Controllers
                 CreatedDate=DateTime.Today.ToString(),
             };
             int result = await _repo.AddDepartmentAsync(department);
-            
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> EditDepartment(string DepartmentName,int departid)
+        public async Task<IActionResult> EditDepartment(string DepartmentName,int id)
         {
             Department department = new Department()
             {
                 DepartmentName = DepartmentName,
                 CreatedDate = DateTime.Today.ToString(),
             };
-            int result = await _repo.UpdateDepartmentAsync(department,departid);
-
+            int result = await _repo.UpdateDepartmentAsync(department,id);
+            if(result==1)
+            {
+                TempData["Success"] = "Department Updated Successfully";
+            }
+            else
+            {
+                TempData["Error"] = "Due to Some Technical Issue or may be data is not correct format";
+            }
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            int msg = await _repo.DeleteDepartmentAsync(id);
+            TempData["Success"] = "Department Deleted Successfully";
+            return RedirectToAction("Index");
+        }
+        private void messageset()
+        {
+            if (TempData["Success"] == null || string.IsNullOrEmpty(TempData["Success"].ToString()))
+            {
+                TempData["Success"] = "Data Loaded Successfully";
+            }
         }
     }
 }

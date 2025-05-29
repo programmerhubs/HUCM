@@ -33,7 +33,7 @@ namespace HUCM_App.Services
             }
             catch(Exception ex)
             {
-
+                retval = -1;
             }
             return retval;
             }
@@ -53,7 +53,7 @@ namespace HUCM_App.Services
         {
             try
             {
-                return await _db.Employeestbl.FirstOrDefaultAsync(x=>x.EmployeeId==EmployeeId);
+                return await _db.Employeestbl.FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
             }
             catch
             {
@@ -94,10 +94,32 @@ namespace HUCM_App.Services
             }
             return retval;
         }
-
-        public Task<int> UpdateAsync(Employee employee, int EmployeeId)
+        public async Task<int> UpdateAsync(Employee employee, int EmployeeId)
         {
-            throw new NotImplementedException();
+            int retval = 0;
+            try
+            {
+                var IsExist = _db.Employeestbl.Any(x => x.EmployeeId == EmployeeId && x.IsActive == true);
+                if (IsExist)
+                {
+                    var employees = _db.Employeestbl.First(x => x.EmployeeId == EmployeeId && x.IsActive == true);
+
+                    employees.EmployeeStatus = employee.EmployeeStatus;
+                    employees.RoleId = employee.RoleId;
+                    employees.Manager = employees.Manager;
+                    employees.Exp = employee.Exp;
+                    employees.Projects = employee.Projects;
+                    employees.Skills = employee.Skills;
+                    employees.ModifiedDate = DateTime.Now.ToString();
+                    await _db.SaveChangesAsync();
+                    retval = 1;
+                }
+            }
+            catch(Exception ex)
+            {
+                retval = -1;
+            }
+            return retval;
         }
     }
 }

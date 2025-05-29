@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<script>
+    $(document).ready(function () {
+        @if (TempData["Success"] != null)
+        {
+            <text>toastr.success('@TempData["Success"]');</text>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <text>toastr.error('@TempData["Error"]');</text>
+        }
+        @if (TempData["Warning"] != null)
+        {
+            <text>toastr.warning('@TempData["Warning"]');</text>
+        }
+        @if (TempData["Info"] != null)
+        {
+            <text>toastr.info('@TempData["Info"]');</text>
+        }
+
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "4000"
+        };
+    });
+</script>

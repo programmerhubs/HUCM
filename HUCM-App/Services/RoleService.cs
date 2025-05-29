@@ -19,6 +19,7 @@ namespace HUCM_App.Services
             int retval = 0;
             try
             {
+                role.CreatedDate = DateTime.Now.ToString();
                 var IsExist = _db.EmpRolesTbl.Any(x => x.RoleName == role.RoleName && x.IsActive == true);
                 if (!IsExist)
                 {
@@ -62,7 +63,7 @@ namespace HUCM_App.Services
         {
             try
             {
-                return await _db.EmpRolesTbl.ToListAsync();
+                return await _db.EmpRolesTbl.Where(x=>x.IsActive==true).ToListAsync();
             }
             catch
             {
@@ -91,16 +92,12 @@ namespace HUCM_App.Services
                 if (IsExist)
                 {
                     var Deaprtments = _db.EmpRolesTbl.First(x => x.RoleId == roleId && x.IsActive == true);
-
-
                     Deaprtments.ModifiedDate = DateTime.Today.ToString();
                     Deaprtments.RoleName = empRole.RoleName;
                     Deaprtments.ModifiedBy = empRole.ModifiedBy;
                     await _db.SaveChangesAsync();
                     retval = 1;
                 }
-
-
             }
             catch (Exception ex)
             {
